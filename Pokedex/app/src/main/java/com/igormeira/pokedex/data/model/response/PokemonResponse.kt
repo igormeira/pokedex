@@ -1,6 +1,6 @@
 package com.igormeira.pokedex.data.model.response
 
-data class pokemonResponse(
+data class PokemonResponse(
     val id: Int,
     val name: String,
     val baseExperience: Int,
