@@ -1,25 +1,17 @@
 package com.igormeira.pokedex.data.remote
 
-import com.igormeira.pokedex.core.Either
-import com.igormeira.pokedex.core.EitherCallAdapterFactory
 import com.igormeira.pokedex.core.Failure
+import com.igormeira.pokedex.core.Resource
 import com.igormeira.pokedex.data.model.response.AllPokemonsResponse
-import com.squareup.moshi.Moshi
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface ApiService {
 
-    suspend fun getPokemons(): AllPokemonsResponse?
+    suspend fun getPokemons(): Resource<Failure, AllPokemonsResponse>
 
     companion object {
         fun create(): ApiService {

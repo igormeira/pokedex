@@ -1,8 +1,7 @@
 package com.igormeira.pokedex.usecase
 
-import com.igormeira.pokedex.core.Either
 import com.igormeira.pokedex.core.Failure
-import com.igormeira.pokedex.data.model.request.PageRequest
+import com.igormeira.pokedex.core.Resource
 import com.igormeira.pokedex.data.model.response.AllPokemonsResponse
 import com.igormeira.pokedex.data.repository.AllPokemonsRepository
 
@@ -12,7 +11,7 @@ class AllPokemonUseCaseImpl(
 
     override suspend fun executeAllPokemons(
         startIndex: Int, limit: Int
-    ): AllPokemonsResponse? =
+    ): Resource<Failure, AllPokemonsResponse> =
         allPokemonsRepository.getAllPokemons(startIndex, limit)
 
 }

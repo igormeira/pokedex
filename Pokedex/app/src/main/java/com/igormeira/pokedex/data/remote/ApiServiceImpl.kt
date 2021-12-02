@@ -1,5 +1,7 @@
 package com.igormeira.pokedex.data.remote
 
+import com.igormeira.pokedex.core.Failure
+import com.igormeira.pokedex.core.Resource
 import com.igormeira.pokedex.core.extensions.logger
 import com.igormeira.pokedex.data.model.response.AllPokemonsResponse
 import io.ktor.client.*
@@ -11,27 +13,35 @@ class ApiServiceImpl(
     private val client: HttpClient
 ) : ApiService {
 
-    override suspend fun getPokemons(): AllPokemonsResponse? {
+    override suspend fun getPokemons(): Resource<Failure, AllPokemonsResponse> {
         return try {
-            client.get {
-                url(HttpRoutes.ALL_POKEMONS)
-            }
+            Resource.Success(
+                client.get { url(HttpRoutes.ALL_POKEMONS) }
+            )
         } catch (e: RedirectResponseException) {
             // 3xx - responses
-            logger("Error: ${e.response.status.description}")
-            null
+            Resource.Error(Failure.NetworkFailure(
+                code = e.response.status.value,
+                message = "Error: ${e.response.status.description}")
+            )
         } catch (e: ClientRequestException) {
             // 4xx - responses
-            logger("Error: ${e.response.status.description}")
-            null
+            Resource.Error(Failure.NetworkFailure(
+                code = e.response.status.value,
+                message = "Error: ${e.response.status.description}")
+            )
         } catch (e: ServerResponseException) {
             // 5xx - responses
-            logger("Error: ${e.response.status.description}")
-            null
-        } catch (e: Exception) {
-            // 3xx - responses
-            logger("Error: ${e.message}")
-            null
+            Resource.Error(Failure.NetworkFailure(
+                code = e.response.status.value,
+                message = "Error: ${e.response.status.description}")
+            )
+        } catch (e: ResponseException) {
+            // 6xx - responses
+            Resource.Error(Failure.NetworkFailure(
+                code = e.response.status.value,
+                message = "Error: ${e.response.status.description}")
+            )
         }
     }
 

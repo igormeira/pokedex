@@ -18,7 +18,7 @@ class HomeViewModel(
         viewModelScope.launch {
             kotlinx.coroutines.withContext(ioDispatcher) {
                 return@withContext useCase.executeAllPokemons(0, 20)
-            }.toString()
+            }.fold(::onFailure, ::onSuccess)
         }
     }
 
@@ -27,7 +27,12 @@ class HomeViewModel(
     }
 
     private fun onSuccess(data: AllPokemonsResponse) {
-        logger(data.toString())
+        logger(data.results.toString())
     }
 
+    data class UiState(
+        val isLoading: Boolean = false,
+        val error: Failure? = null,
+        val pages: AllPokemonsResponse
+    )
 }
