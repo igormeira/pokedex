@@ -1,9 +1,11 @@
 package com.igormeira.pokedex.data.repository
 
-import com.igormeira.pokedex.data.model.request.PageRequest
+import com.igormeira.pokedex.core.Either
+import com.igormeira.pokedex.core.Failure
+import com.igormeira.pokedex.data.model.response.AllPokemonsResponse
 
-class AllPokemonsRepository {
+interface AllPokemonsRepository {
 
-    suspend fun getAllPokemons(page: PageRequest) {}
+    suspend fun getAllPokemons(startIndex: Int, limit: Int): AllPokemonsResponse?
 
 }
