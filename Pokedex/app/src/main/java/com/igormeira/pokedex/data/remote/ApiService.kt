@@ -26,29 +26,4 @@ interface ApiService {
         }
     }
 
-//    //region [All Pokemon]
-//    @GET("pokemon/")
-//    suspend fun getPokemons(
-//        @Query("offset") offset: Int,
-//        @Query("limit") limit: Int
-//    ): Either<Failure, AllPokemonsResponse>
-//
-//    @GET("pokemon/?offset=0&limit=20")
-//    suspend fun getPokemons2(): Either<Failure, AllPokemonsResponse>
-//    //endregion
-//
-//    companion object {
-//
-//        fun getBaseService(moshi: Moshi, client: OkHttpClient): ApiService {
-//            val retrofit: Retrofit = Retrofit.Builder()
-//                .baseUrl("https://pokeapi.co/api/v2/")
-//                .addConverterFactory(MoshiConverterFactory.create(moshi))
-//                .addCallAdapterFactory(EitherCallAdapterFactory())
-//                .client(client)
-//                .build()
-//            return retrofit.create(ApiService::class.java)
-//        }
-//
-//    }
-
 }
